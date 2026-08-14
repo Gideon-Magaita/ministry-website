@@ -43,7 +43,11 @@ export default function App() {
       <Route path="announcements/create" element={<AnnouncementForm />} />
       <Route path="announcements/edit/:id" element={<AnnouncementForm />} />
       <Route path="sitemap" element={<AdminSitemap />} />
-      <Route path="*" element={<div className="py-5"><h2>Admin page coming soon</h2><p className="text-muted">This module is ready to be connected to the CMS API.</p></div>} />
+      <Route path="*" element={<div className="py-5">
+        <h2>Admin page coming soon</h2>
+        <p className="text-muted">This module is ready to be connected to the CMS API.</p>
+        </div>} 
+        />
     </Route>
     <Route path="*" element={
       <div className="container py-5 text-center">
