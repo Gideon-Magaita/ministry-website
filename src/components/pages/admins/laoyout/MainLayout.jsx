@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet, NavLink } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import SiteLoader from './SiteLoader';
+import Footer from './Footer'
 
 
 export default function MainLayout() {
@@ -34,7 +35,10 @@ export default function MainLayout() {
             <div className="admin-user"><div className="avatar">A</div><div className="d-none d-sm-block"><strong>Administrator</strong><small>Super Admin</small></div></div>
           </div>
         </header>
-        <main className="admin-content"><Outlet /></main>
+        <main className="admin-content">
+          <Outlet />
+        </main>
+        <Footer/> 
       </div>
     </div>
   )
