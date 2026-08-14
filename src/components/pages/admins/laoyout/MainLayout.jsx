@@ -1,9 +1,27 @@
+import React from 'react'
 import { Outlet, NavLink } from 'react-router-dom'
 import Sidebar from './Sidebar'
+import SiteLoader from './SiteLoader';
+
 
 export default function MainLayout() {
+
+  const [showSiteLoader, setShowSiteLoader] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSiteLoader(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
   return (
     <div className="admin-shell">
+
+      {showSiteLoader && <SiteLoader />}
+      
       <Sidebar />
       <div className="admin-main">
         <header className="admin-topbar">

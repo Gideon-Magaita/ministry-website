@@ -52,13 +52,11 @@ export default function Header() {
                 <h1 className="brand-title">Ministry of Water</h1>
                 <div className="brand-subtitle">Water for Sustainable Development</div>
               </div>
-
               <div className="col-3 col-lg-2 text-end">
                 <div className="coat-placeholder ms-auto">
                   <img src="/logo.png" alt="Coat of Arms" className="img-fluid" />
                 </div>
               </div>
-
             </div>
           </div>
         </div>

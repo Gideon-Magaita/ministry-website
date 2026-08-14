@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getNews, getAnnouncements } from '../../../data/content'
 import ministerAweso from '../../../assets/leadership/minister-aweso.jpg'
 import deputyMinister from '../../../assets/leadership/deputy-minister.jpg'
@@ -20,6 +20,46 @@ const projects = [
   { title: 'Rural Water Access Initiative', location: 'Singida Region', progress: 64, status: 'Ongoing', image: 'https://images.unsplash.com/photo-1599059813005-11265ba4b4f0?auto=format&fit=crop&w=800&q=80' },
   { title: 'Water Resource Monitoring', location: 'National Programme', progress: 91, status: 'Near completion', image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80' },
 ]
+
+
+function AnimatedNumber({ value }) {
+  const ref = useRef(null)
+  const [display, setDisplay] = useState(0)
+  const target = typeof value === 'number' ? value : parseInt(String(value).replace(/[^0-9]/g, ''), 10) || 0
+
+  useEffect(() => {
+    let started = false
+    let frame
+    const duration = 1500
+
+    const animate = () => {
+      const start = performance.now()
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        setDisplay(Math.floor(target * eased))
+        if (progress < 1) frame = requestAnimationFrame(tick)
+      }
+      frame = requestAnimationFrame(tick)
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started) {
+        started = true
+        animate()
+        observer.disconnect()
+      }
+    }, { threshold: 0.35 })
+
+    if (ref.current) observer.observe(ref.current)
+    return () => {
+      observer.disconnect()
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [target])
+
+  return <span ref={ref}>{display.toLocaleString()}{String(value).includes('+') ? '+' : ''}</span>
+}
 
 function LeadershipCarousel({ id, ribbon, people }) {
   const [selectedLeader, setSelectedLeader] = useState(null);
@@ -99,8 +139,8 @@ export default function Home() {
                   <div className="carousel-item active h-100">
                     <img src="https://images.unsplash.com/photo-1468421870903-4df1664ac249?auto=format&fit=crop&w=1600&q=85" alt="Water landscape" />
                     <div className="hero-overlay" />
-                    <div className="carousel-caption text-start">
-                      <span className="hero-label">WATER FOR DEVELOPMENT</span>
+                    <div className="carousel-caption hero-news-caption">
+                      <span className="hero-label">LATEST NEWS</span>
                       <h1>Building a water-secure Tanzania</h1>
                       <p>Advancing sustainable water resources and reliable services for every community.</p>
                       <a href="#projects" className="btn btn-primary rounded-pill px-4">Explore Our Projects <i className="bi bi-arrow-right ms-1" /></a>
@@ -109,8 +149,8 @@ export default function Home() {
                   <div className="carousel-item h-100">
                     <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=85" alt="Water infrastructure" />
                     <div className="hero-overlay" />
-                    <div className="carousel-caption text-start">
-                      <span className="hero-label">SUSTAINABLE RESOURCES</span>
+                    <div className="carousel-caption hero-news-caption">
+                      <span className="hero-label">MINISTRY UPDATE</span>
                       <h1>Protecting water for generations</h1>
                       <p>Supporting responsible water resource management and climate resilience.</p>
                       <a href="#services" className="btn btn-primary rounded-pill px-4">Our Services <i className="bi bi-arrow-right ms-1" /></a>
@@ -119,8 +159,8 @@ export default function Home() {
                   <div className="carousel-item h-100">
                     <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=1600&q=85" alt="Clean water" />
                     <div className="hero-overlay" />
-                    <div className="carousel-caption text-start">
-                      <span className="hero-label">CLEAN & SAFE WATER</span>
+                    <div className="carousel-caption hero-news-caption">
+                      <span className="hero-label">PUBLIC UPDATE</span>
                       <h1>Water services that reach people</h1>
                       <p>Expanding access to safe, affordable and sustainable water supply.</p>
                       <a href="#news" className="btn btn-primary rounded-pill px-4">Latest Updates <i className="bi bi-arrow-right ms-1" /></a>
@@ -161,12 +201,19 @@ export default function Home() {
           <SectionHeading eyebrow="MINISTRY AT A GLANCE" title="Making an impact through water" text="A snapshot of our programmes and commitment to sustainable water services." />
           <div className="row g-3 mt-2">
             {[
-              ['4,800+','Water Projects','bi-droplet'],
-              ['26','Regions Covered','bi-geo-alt'],
-              ['68%','National Water Coverage','bi-graph-up-arrow'],
-              ['1,200+','Communities Reached','bi-people'],
-            ].map(([num,label,icon]) => (
-              <div className="col-6 col-lg-3" key={label}><div className="stat-card"><i className={`bi ${icon}`} /><div className="stat-number">{num}</div><div className="stat-label">{label}</div></div></div>
+              [4800,'+','Water Projects','bi-droplet'],
+              [26,'','Regions Covered','bi-geo-alt'],
+              [68,'%','National Water Coverage','bi-graph-up-arrow'],
+              [1200,'+','Communities Reached','bi-people'],
+            ].map(([num,suffix,label,icon]) => (
+              <div className="col-6 col-lg-3" key={label}>
+                <div className="stat-card impact-card">
+                  <div className="impact-icon"><i className={`bi ${icon}`} /></div>
+                  <div className="stat-number"><AnimatedNumber value={num} />{suffix}</div>
+                  <div className="stat-label">{label}</div>
+                  <div className="impact-shine" />
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -216,6 +263,44 @@ export default function Home() {
         </div>
       </section>
 
+
+      <section id="events" className="content-section bg-light-subtle upcoming-events-section">
+        <div className="container">
+          <div className="section-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3">
+            <div>
+              <div className="eyebrow">CALENDAR</div>
+              <h2>Upcoming events</h2>
+              <p>Discover upcoming Ministry programmes, forums, launches and public engagements.</p>
+            </div>
+            <Link className="btn btn-outline-primary rounded-pill px-4" to="/home#events">
+              View All Events <i className="bi bi-arrow-right ms-1" />
+            </Link>
+          </div>
+          <div className="row g-4 mt-1">
+            {[
+              ['24','AUG','National Water Stakeholders Forum','Dodoma · 09:00 AM','bi-people'],
+              ['03','SEP','Water Resources Management Workshop','Arusha · 10:00 AM','bi-droplet-half'],
+              ['18','SEP','Water Infrastructure Project Launch','Mwanza · 08:30 AM','bi-building'],
+            ].map(([day,month,title,meta,icon]) => (
+              <div className="col-lg-4 col-md-6" key={title}>
+                <article className="event-card">
+                  <div className="event-date">
+                    <strong>{day}</strong><span>{month}</span>
+                  </div>
+                  <div className="event-icon"><i className={`bi ${icon}`} /></div>
+                  <div className="event-body">
+                    <span className="event-kicker">UPCOMING EVENT</span>
+                    <h3>{title}</h3>
+                    <p><i className="bi bi-geo-alt me-1" />{meta}</p>
+                    <a href="#" className="event-link">Event Details <i className="bi bi-arrow-right ms-1" /></a>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="content-section" id="projects">
         <div className="container">
           <SectionHeading eyebrow="OUR WORK" title="Featured projects" text="Explore programmes transforming access to water across Tanzania." link="View All Projects" />
@@ -256,6 +341,36 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section className="content-section important-links-section">
+        <div className="container">
+          <div className="section-heading">
+            <div className="eyebrow">OUR NETWORK</div>
+            <h2>Important links & partners</h2>
+            <p>Connect with government institutions, water sector agencies and development partners.</p>
+          </div>
+          <div className="row g-4 mt-1">
+            {[
+              ['Government of Tanzania','Official government portal','GOV','Tanzania Government'],
+              ['Tanzania Water Supply and Sanitation Authority','Water supply and sanitation services','DAWASA','DAWASA'],
+              ['Water Resources Authority','Water resource management and protection','WRA','Water Resources Authority'],
+              ['Development Partners','Partners supporting sustainable water development','DP','Development Partners'],
+            ].map(([name,desc,mark,alt]) => (
+              <div className="col-lg-3 col-md-6" key={name}>
+                <a href="#" className="partner-card">
+                  <span className="partner-logo" aria-label={`${alt} logo`}>
+                    <span>{mark}</span>
+                  </span>
+                  <span className="partner-name">{name}</span>
+                  <span className="partner-desc">{desc}</span>
+                  <i className="bi bi-arrow-up-right partner-arrow" />
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
