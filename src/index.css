@@ -266,7 +266,18 @@ a { text-decoration:none; }
 .sticky-nav { position:sticky; top:0; z-index:1035; box-shadow:0 7px 20px rgba(3,48,79,.18); }
 .hero-wrap .row { min-height:520px; }
 .hero-wrap .col-lg-3 { min-height:520px; }
-.leadership-card { flex:1 1 0; min-height:0; border-radius:20px; overflow:hidden; background:#062f4f; box-shadow:0 14px 34px rgba(5,43,70,.14); border:1px solid rgba(255,255,255,.5); position:relative; isolation:isolate; transition:transform .28s ease, box-shadow .28s ease; }
+.leadership-card { 
+  flex:1 1 0; 
+  min-height:0; 
+  border-radius:20px; 
+  overflow:hidden; 
+  background:#062f4f; 
+  box-shadow:0 14px 34px rgba(5,43,70,.14); 
+  border:1px solid rgba(255,255,255,.5); 
+  position:relative; 
+  isolation:isolate; 
+  transition:transform .28s ease, box-shadow .28s ease; 
+}
 .leadership-card::before { content:''; position:absolute; inset:0; z-index:3; pointer-events:none; border-radius:20px; padding:1px; background:linear-gradient(135deg,rgba(91,220,247,.8),rgba(255,255,255,.12),rgba(7,95,157,.9)); -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; }
 .leadership-card:hover { transform:translateY(-6px); box-shadow:0 20px 42px rgba(5,43,70,.24); }
 .leadership-ribbon { position:absolute; z-index:6; top:13px; left:13px; padding:7px 11px; border-radius:999px; background:rgba(4,34,56,.78); color:#d6f7ff; font-size:.54rem; letter-spacing:.11em; font-weight:800; backdrop-filter:blur(10px); box-shadow:0 5px 16px rgba(0,0,0,.14); }
@@ -462,15 +473,18 @@ a { text-decoration:none; }
 
 
 
-/* v7 public-site width */
+/* ================================
+   PUBLIC WEBSITE WIDTH
+================================ */
+
 .public-site .container,
 .public-site .container-fluid {
-  max-width: 1500px;
+  max-width: 1300px;
 }
 
 @media (min-width: 992px) {
   .public-site .container {
-    width: min(1200px, calc(100% - 32px));
+    width: min(1300px, calc(100% - 40px));
   }
 }
 
@@ -1324,3 +1338,1135 @@ a { text-decoration:none; }
   }
 }
 
+
+
+/* =========================================================
+   V23 — REQUESTED LAYOUT REFINEMENTS
+   Only the requested layout/interaction changes are added.
+   ========================================================= */
+
+/* 1. Wider overall public content area */
+.public-site .container,
+.public-site .container-fluid {
+  width: calc(100% - 32px);
+  max-width: 1540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1400px) {
+  .public-site .container,
+  .public-site .container-fluid {
+    width: min(1540px, calc(100% - 44px));
+  }
+}
+
+/* 2. Slightly more room for the main slider on desktop */
+@media (min-width: 992px) {
+  .public-site .hero-wrap .col-lg-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  .public-site .hero-wrap .col-lg-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+}
+
+/* 3. Square leadership cards */
+.public-site .leadership-card {
+  width: min(100%, 250px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  min-height: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.public-site .leadership-carousel,
+.public-site .leadership-carousel .carousel-inner,
+.public-site .leadership-carousel .carousel-item {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.public-site .leadership-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+
+/* Preserve leader information over the photograph */
+.public-site .leadership-caption {
+  z-index: 10;
+}
+
+/* 4. Modern sleek slider arrows */
+.public-site .hero-carousel .carousel-control-prev,
+.public-site .hero-carousel .carousel-control-next {
+  width: 48px;
+  height: 48px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  opacity: 1;
+
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .42);
+
+  background: rgba(3, 48, 80, .55);
+
+  box-shadow:
+    0 8px 22px rgba(0, 31, 55, .20);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  transition:
+    background .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.public-site .hero-carousel .carousel-control-prev {
+  left: 14px;
+}
+
+.public-site .hero-carousel .carousel-control-next {
+  right: 14px;
+}
+
+.public-site .hero-carousel .carousel-control-prev:hover,
+.public-site .hero-carousel .carousel-control-next:hover {
+  background: rgba(0, 111, 181, .88);
+  box-shadow:
+    0 11px 26px rgba(0, 76, 125, .30);
+}
+
+.public-site .hero-carousel .carousel-control-prev:hover {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.public-site .hero-carousel .carousel-control-next:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
+.public-site .hero-carousel .carousel-control-prev-icon,
+.public-site .hero-carousel .carousel-control-next-icon {
+  width: 17px;
+  height: 17px;
+  background-size: 17px 17px;
+}
+
+/* 5. Subtle animated water atmosphere.
+      It is deliberately low-contrast so existing content is unchanged. */
+.public-site {
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(239, 249, 253, .96),
+      rgba(246, 251, 253, .98)
+    );
+}
+
+.public-site::before,
+.public-site::after {
+  content: "";
+  position: fixed;
+  left: -10%;
+  width: 120%;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 48%;
+}
+
+.public-site::before {
+  top: 12%;
+  height: 260px;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(56, 181, 224, .12) 0%,
+      rgba(56, 181, 224, .06) 42%,
+      transparent 72%
+    );
+
+  filter: blur(9px);
+
+  animation: ministryWaterDrift 12s ease-in-out infinite;
+}
+
+.public-site::after {
+  bottom: 2%;
+  height: 220px;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(15, 139, 197, .09) 0%,
+      rgba(15, 139, 197, .04) 46%,
+      transparent 74%
+    );
+
+  filter: blur(10px);
+
+  animation: ministryWaterDriftReverse 15s ease-in-out infinite;
+}
+
+@keyframes ministryWaterDrift {
+  0%, 100% {
+    transform: translateX(-2%) translateY(0) scaleX(1);
+  }
+
+  50% {
+    transform: translateX(2.5%) translateY(-10px) scaleX(1.035);
+  }
+}
+
+@keyframes ministryWaterDriftReverse {
+  0%, 100% {
+    transform: translateX(2%) translateY(0) scaleX(1.02);
+  }
+
+  50% {
+    transform: translateX(-2.5%) translateY(9px) scaleX(.98);
+  }
+}
+
+/* Small hover response when the user interacts with the page background */
+.public-site:hover::before {
+  animation-duration: 8s;
+  filter: blur(8px) saturate(1.08);
+}
+
+.public-site:hover::after {
+  animation-duration: 10s;
+  filter: blur(9px) saturate(1.08);
+}
+
+/* 6. Sticky Back-to-Top button */
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 1095;
+
+  width: 46px;
+  height: 46px;
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255, 255, 255, .40);
+  border-radius: 50%;
+
+  color: #fff;
+  background: linear-gradient(145deg, #087fbd, #055d94);
+
+  box-shadow:
+    0 9px 24px rgba(4, 76, 119, .26);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(.92);
+
+  transition:
+    opacity .25s ease,
+    visibility .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.back-to-top:hover {
+  background: linear-gradient(145deg, #0b91d0, #0671ad);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 13px 28px rgba(4, 76, 119, .34);
+}
+
+.back-to-top i {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+  .public-site .container,
+  .public-site .container-fluid {
+    width: calc(100% - 28px);
+  }
+
+  .public-site .leadership-card {
+    width: min(100%, 340px);
+  }
+
+  .public-site .hero-carousel .carousel-control-prev,
+  .public-site .hero-carousel .carousel-control-next {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .public-site .container,
+  .public-site .container-fluid {
+    width: calc(100% - 20px);
+  }
+
+  .public-site .leadership-card {
+    width: min(100%, 320px);
+  }
+
+  .public-site .hero-carousel .carousel-control-prev,
+  .public-site .hero-carousel .carousel-control-next {
+    width: 38px;
+    height: 38px;
+  }
+
+  .public-site .hero-carousel .carousel-control-prev {
+    left: 8px;
+  }
+
+  .public-site .hero-carousel .carousel-control-next {
+    right: 8px;
+  }
+
+  .back-to-top {
+    right: 14px;
+    bottom: 16px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-site::before,
+  .public-site::after {
+    animation: none;
+  }
+
+  .back-to-top {
+    transition: none;
+  }
+}
+
+
+
+/* Keep the blue menu visible while the page scrolls.
+   The branding/top header scrolls away naturally. */
+.public-site .sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1080;
+
+  width: 100%;
+
+  box-shadow:
+    0 5px 18px rgba(3, 48, 79, .16);
+
+  isolation: isolate;
+}
+
+.public-site .sticky-nav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: rgba(255,255,255,.28);
+  pointer-events: none;
+}
+
+/* Interactive watery atmosphere.
+   The soft background follows the mouse using CSS variables
+   set by MainLayout. */
+.public-site {
+  --water-x: 50%;
+  --water-y: 42%;
+  --water-intensity: 0;
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(239, 249, 253, .97),
+      rgba(247, 251, 253, .99)
+    );
+}
+
+.public-site::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      420px circle at var(--water-x) var(--water-y),
+      rgba(42, 174, 221, calc(.12 + var(--water-intensity) * .12)),
+      rgba(42, 174, 221, calc(.035 + var(--water-intensity) * .045)) 35%,
+      transparent 72%
+    ),
+    radial-gradient(
+      900px 380px ellipse at 20% 22%,
+      rgba(84, 193, 224, .08),
+      transparent 70%
+    ),
+    radial-gradient(
+      1000px 420px ellipse at 82% 70%,
+      rgba(12, 133, 190, .055),
+      transparent 72%
+    );
+
+  filter: blur(1px);
+  transform: translate3d(0,0,0);
+  transition:
+    background .18s ease,
+    filter .35s ease;
+}
+
+.public-site::after {
+  content: "";
+  position: fixed;
+  left: -8%;
+  right: -8%;
+  bottom: -80px;
+  height: 260px;
+  z-index: -1;
+  pointer-events: none;
+
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 30%,
+      rgba(46, 181, 225, .10),
+      rgba(46, 181, 225, .035) 45%,
+      transparent 73%
+    );
+
+  filter: blur(7px);
+
+  animation:
+    ministryWaterWave 11s ease-in-out infinite;
+}
+
+@keyframes ministryWaterWave {
+  0%, 100% {
+    transform: translate3d(-2%, 0, 0) scaleX(1);
+  }
+
+  50% {
+    transform: translate3d(2%, -9px, 0) scaleX(1.035);
+  }
+}
+
+/* The mouse interaction creates a soft ripple rather than a
+   distracting hard circle. */
+.public-site.is-water-hovering::before {
+  filter: blur(2px) saturate(1.12);
+
+  animation:
+    waterPointerPulse 1.8s ease-out infinite;
+}
+
+@keyframes waterPointerPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.018);
+  }
+}
+
+/* Mobile: keep the effect subtle and inexpensive. */
+@media (max-width: 767.98px) {
+  .public-site::before {
+    background:
+      radial-gradient(
+        300px circle at var(--water-x) var(--water-y),
+        rgba(42, 174, 221, .09),
+        rgba(42, 174, 221, .025) 38%,
+        transparent 72%
+      );
+  }
+
+  .public-site::after {
+    animation-duration: 14s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-site::before,
+  .public-site::after,
+  .public-site.is-water-hovering::before {
+    animation: none;
+    transition: none;
+  }
+}
+
+
+/* =========================================================
+   V26 — DEFINITIVE STICKY MENU + VISIBLE WATER EFFECT
+   ========================================================= */
+
+/* Keep the public page itself from becoming a scroll container.
+   overflow-x: hidden can prevent position: sticky from behaving
+   as expected in some browsers, so use clip instead. */
+.public-site {
+  position: relative;
+  isolation: isolate;
+
+  overflow-x: clip;
+  overflow-y: visible;
+
+  background: transparent;
+}
+
+/* Make the blue navigation bar genuinely sticky. */
+.public-site .sticky-nav {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+
+  top: 0 !important;
+  z-index: 1100 !important;
+
+  width: 100%;
+
+  box-shadow:
+    0 5px 18px rgba(3, 48, 79, .18);
+
+  transition:
+    box-shadow .25s ease,
+    background-color .25s ease;
+}
+
+/* Keep the navigation background solid while it is over content. */
+.public-site .sticky-nav,
+.public-site .main-nav {
+  background: #0879b9;
+}
+
+/* Dropdown menus must appear above the sticky bar/content. */
+.public-site .sticky-nav .dropdown-menu {
+  z-index: 1110;
+}
+
+/* ---------------------------------------------------------
+   WATER BACKGROUND
+   --------------------------------------------------------- */
+
+/* Dedicated water layer sits behind all real page content. */
+.public-site .water-background {
+  position: fixed !important;
+  inset: 0 !important;
+
+  z-index: 0 !important;
+  pointer-events: none;
+
+  display: block;
+
+  overflow: hidden;
+
+  opacity: 1;
+}
+
+/* All real public-site content sits above the water layer. */
+.public-site > header,
+.public-site > nav,
+.public-site > main,
+.public-site > footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Make sure the water layer itself is not hidden by a section background. */
+.public-site .water-layer {
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* Broad, visible flowing water */
+.public-site .water-layer-one {
+  top: 8%;
+  height: 310px;
+
+  opacity: .95;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 45%,
+      rgba(55, 184, 229, .25) 0%,
+      rgba(55, 184, 229, .14) 28%,
+      rgba(55, 184, 229, .055) 55%,
+      transparent 78%
+    );
+
+  filter: blur(10px);
+
+  animation:
+    ministryWaterWaveOne 9s ease-in-out infinite;
+}
+
+.public-site .water-layer-two {
+  bottom: 5%;
+  height: 360px;
+
+  opacity: .82;
+
+  background:
+    radial-gradient(
+      ellipse at 48% 50%,
+      rgba(10, 139, 199, .20) 0%,
+      rgba(42, 174, 221, .11) 30%,
+      rgba(42, 174, 221, .045) 58%,
+      transparent 80%
+    );
+
+  filter: blur(12px);
+
+  animation:
+    ministryWaterWaveTwo 12s ease-in-out infinite;
+}
+
+/* Mouse-following water ripple */
+.public-site .water-pointer-ripple {
+  position: absolute;
+
+  width: 560px;
+  height: 560px;
+
+  left: var(--water-x, 50%);
+  top: var(--water-y, 50%);
+
+  transform:
+    translate(-50%, -50%)
+    scale(calc(.82 + var(--water-active, 0) * .18));
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(35, 181, 229, .20) 0%,
+      rgba(35, 181, 229, .105) 18%,
+      rgba(35, 181, 229, .045) 40%,
+      transparent 70%
+    );
+
+  opacity: calc(.30 + var(--water-active, 0) * .70);
+
+  filter: blur(3px);
+
+  transition:
+    left .18s ease-out,
+    top .18s ease-out,
+    opacity .3s ease,
+    transform .4s ease;
+
+  animation:
+    ministryPointerRipple 3.4s ease-in-out infinite;
+}
+
+/* Second ripple ring gives the cursor interaction a watery feel. */
+.public-site .water-pointer-ripple::after {
+  content: "";
+
+  position: absolute;
+  inset: 16%;
+
+  border: 1px solid rgba(57, 191, 232, .16);
+
+  border-radius: 50%;
+
+  animation:
+    ministryRippleRing 2.6s ease-out infinite;
+}
+
+@keyframes ministryWaterWaveOne {
+  0%, 100% {
+    transform:
+      translate3d(-4%, 0, 0)
+      rotate(-1deg)
+      scaleX(1);
+  }
+
+  50% {
+    transform:
+      translate3d(4%, -16px, 0)
+      rotate(1deg)
+      scaleX(1.08);
+  }
+}
+
+@keyframes ministryWaterWaveTwo {
+  0%, 100% {
+    transform:
+      translate3d(4%, 0, 0)
+      rotate(1deg)
+      scaleX(1.03);
+  }
+
+  50% {
+    transform:
+      translate3d(-4%, 18px, 0)
+      rotate(-1deg)
+      scaleX(.96);
+  }
+}
+
+@keyframes ministryPointerRipple {
+  0%, 100% {
+    box-shadow:
+      0 0 35px rgba(38, 179, 225, .06);
+  }
+
+  50% {
+    box-shadow:
+      0 0 90px rgba(38, 179, 225, .15);
+  }
+}
+
+@keyframes ministryRippleRing {
+  0% {
+    transform: scale(.65);
+    opacity: .55;
+  }
+
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* Stronger movement when the cursor is over the page. */
+.public-site:hover .water-layer-one {
+  animation-duration: 6.5s;
+}
+
+.public-site:hover .water-layer-two {
+  animation-duration: 8.5s;
+}
+
+/* Keep the water visible but softer on small screens. */
+@media (max-width: 767.98px) {
+  .public-site .water-layer-one {
+    height: 220px;
+    opacity: .70;
+  }
+
+  .public-site .water-layer-two {
+    height: 250px;
+    opacity: .58;
+  }
+
+  .public-site .water-pointer-ripple {
+    width: 360px;
+    height: 360px;
+    opacity: calc(.16 + var(--water-active, 0) * .40);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .public-site .water-layer-one,
+  .public-site .water-layer-two,
+  .public-site .water-pointer-ripple,
+  .public-site .water-pointer-ripple::after {
+    animation: none !important;
+  }
+
+  .public-site .sticky-nav {
+    transition: none;
+  }
+}
+
+
+/* DIRA — always above the footer and page content */
+.public-site .dira-2050-floating,
+.public-site .dira-floating,
+.public-site [class*="dira"][class*="floating"] {
+  position: fixed !important;
+  right: 20px !important;
+  bottom: 78px !important;
+  z-index: 1120 !important;
+  transform-origin: center bottom;
+}
+
+/* Keep DIRA above the footer when the page reaches the bottom. */
+.public-site footer ~ .dira-2050-floating,
+.public-site footer + .dira-2050-floating {
+  z-index: 1120 !important;
+}
+
+
+/* Additional water hover interaction */
+.public-site .water-background {
+  transition: opacity .35s ease, filter .35s ease;
+}
+
+.public-site:hover .water-background {
+  filter: saturate(1.08);
+}
+
+.public-site .water-layer-one,
+.public-site .water-layer-two {
+  transition:
+    transform .65s cubic-bezier(.2,.8,.2,1),
+    filter .45s ease,
+    opacity .45s ease;
+}
+
+.public-site:hover .water-layer-one {
+  filter: blur(8px) saturate(1.18);
+}
+
+.public-site:hover .water-layer-two {
+  filter: blur(10px) saturate(1.16);
+}
+
+/* A second soft cursor ripple makes the water feel more interactive. */
+.public-site .water-pointer-ripple::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border: 1px solid rgba(61, 195, 235, .10);
+  border-radius: 50%;
+  animation: ministryRippleRingOuter 3.6s ease-out infinite;
+}
+
+@keyframes ministryRippleRingOuter {
+  0% {
+    transform: scale(.55);
+    opacity: .35;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+/* ---- Search overlay ---- */
+.site-search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: clamp(70px, 12vh, 130px) 20px 30px;
+
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(56, 183, 226, .18),
+      transparent 40%
+    ),
+    rgba(2, 30, 51, .58);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  animation: searchOverlayIn .22s ease-out;
+}
+
+.site-search-panel {
+  position: relative;
+
+  width: min(720px, 100%);
+
+  padding: clamp(28px, 5vw, 44px);
+
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.98),
+      rgba(241,250,253,.97)
+    );
+
+  box-shadow:
+    0 30px 80px rgba(0, 38, 66, .30);
+
+  animation: searchPanelIn .3s cubic-bezier(.2,.8,.2,1);
+}
+
+.site-search-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(7, 86, 128, .12);
+  border-radius: 50%;
+
+  background: #fff;
+  color: #24516c;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    color .2s ease;
+}
+
+.site-search-close:hover {
+  transform: rotate(90deg);
+  background: #eaf7fb;
+  color: #0879b9;
+}
+
+.site-search-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding-right: 40px;
+  margin-bottom: 24px;
+}
+
+.site-search-icon {
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 16px;
+
+  background: linear-gradient(145deg, #0b8dca, #06649d);
+  color: #fff;
+
+  box-shadow: 0 10px 22px rgba(6, 100, 157, .22);
+}
+
+.site-search-heading small {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #0879b9;
+
+  font-size: .63rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.site-search-heading h2 {
+  margin: 0;
+
+  color: #073a5c;
+
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  font-weight: 800;
+}
+
+.site-search-form {
+  display: flex;
+  gap: 10px;
+}
+
+.site-search-input-wrap {
+  position: relative;
+
+  flex: 1;
+}
+
+.site-search-input-wrap > i {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #6c91a5;
+}
+
+.site-search-input-wrap input {
+  width: 100%;
+  height: 54px;
+
+  padding: 0 48px 0 46px;
+
+  border: 1px solid #cfe1e9;
+  border-radius: 14px;
+
+  outline: none;
+
+  color: #143c54;
+  background: #fff;
+
+  font-size: .95rem;
+
+  box-shadow:
+    inset 0 1px 2px rgba(4, 45, 67, .03);
+
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.site-search-input-wrap input:focus {
+  border-color: #31a9d8;
+
+  box-shadow:
+    0 0 0 4px rgba(49, 169, 216, .12);
+}
+
+.site-search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: 0;
+  background: transparent;
+
+  color: #8ca6b4;
+
+  font-size: 1rem;
+}
+
+.site-search-submit {
+  height: 54px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 0 20px;
+
+  border: 0;
+  border-radius: 14px;
+
+  background: linear-gradient(145deg, #087fbd, #055e95);
+  color: #fff;
+
+  font-weight: 700;
+
+  box-shadow: 0 8px 20px rgba(5, 94, 149, .20);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.site-search-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 11px 24px rgba(5, 94, 149, .28);
+}
+
+.site-search-hint {
+  margin: 14px 0 0;
+
+  color: #7895a5;
+
+  font-size: .75rem;
+}
+
+.site-search-hint kbd {
+  padding: 2px 6px;
+
+  border: 1px solid #cbdde5;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+
+  background: #f6fbfd;
+  color: #527080;
+
+  font-size: .68rem;
+}
+
+body.search-overlay-open {
+  overflow: hidden;
+}
+
+@keyframes searchOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes searchPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(-18px) scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .site-search-overlay {
+    padding: 55px 12px 20px;
+  }
+
+  .site-search-panel {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .site-search-form {
+    flex-direction: column;
+  }
+
+  .site-search-submit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .public-site .dira-2050-floating,
+  .public-site .dira-floating,
+  .public-site [class*="dira"][class*="floating"] {
+    right: 12px !important;
+    bottom: 68px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-search-overlay,
+  .site-search-panel,
+  .public-site .water-pointer-ripple::before {
+    animation: none !important;
+  }
+
+  .site-search-close,
+  .site-search-submit {
+    transition: none;
+  }
+}

@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import SearchOverlay from './SearchOverlay';
 import { Link, NavLink } from 'react-router-dom'
 
 const navItems = [
@@ -21,6 +23,7 @@ const navItems = [
 ]
 
 export default function Header() {
+  const [searchOpen, setSearchOpen] = useState(false);
   return (
     <>
       <header>
@@ -103,10 +106,11 @@ export default function Header() {
                 </li>
               ))}
             </ul>
-            <button className="btn btn-light btn-sm search-button" type="button"><i className="bi bi-search me-1" /> Search</button>
+            <button className="btn btn-light btn-sm search-button" type="button" onClick={() => setSearchOpen(true)}><i className="bi bi-search me-1" /> Search</button>
           </div>
         </div>
       </nav>
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   )
 }
